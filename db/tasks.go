@@ -11,7 +11,7 @@ var taskBucket = []byte("tasks")
 var db *bolt.DB
 
 type Task struct {
-	Key int
+	Key   int
 	Value string
 }
 
@@ -27,7 +27,7 @@ func Init(dbPath string) error {
 	})
 }
 
-func CreateTask(task string) (int, error){
+func CreateTask(task string) (int, error) {
 	var id int
 	err := db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(taskBucket)
@@ -50,7 +50,7 @@ func AllTasks() ([]Task, error) {
 		c := b.Cursor()
 		for k, v := c.First(); k != nil; k, v = c.Next() {
 			tasks = append(tasks, Task{
-				Key: btoi(k),
+				Key:   btoi(k),
 				Value: string(v),
 			})
 		}
